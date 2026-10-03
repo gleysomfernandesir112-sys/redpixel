@@ -1,39 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content="Play minecraft 1.8 in your browser" />
-		<meta name="keywords" content="messcraft, messcraftx, minecraft, 1.8, 1.8.8" />
-		<title>MessCraftX 1.8</title>
-		<meta property="og:locale" content="en-US" />
+		<meta name="description" content="RedPixel Minecraft 1.8.8 direto no seu navegador" />
+		<meta name="keywords" content="redpixel, minecraft, 1.8, 1.8.8, eaglercraftx" />
+		<title>RedPixel 1.8.8</title>
+		<meta property="og:locale" content="pt_BR" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="MessCraft 1.8" />
-		<meta property="og:description" content="Play minecraft 1.8 in your browser" />
-		<meta property="og:image" content="favicon.png" />
-		<link type="image/png" rel="shortcut icon" href="favicon.png" />
+		<meta property="og:title" content="RedPixel 1.8.8" />
+		<meta property="og:description" content="Jogue Minecraft 1.8.8 no servidor RedPixel direto do navegador" />
+		<link type="image/png" rel="shortcut icon" href="../../favicon.ico" />
 		<script type="text/javascript" src="classes.js"></script>
 		<script type="text/javascript">
 			"use strict";
+
+			// Configuração inicial de idioma padrão em Português e limpeza de servidores antigos
+			try {
+				var g = localStorage.getItem("_eaglercraftX.g");
+				if (!g) {
+					localStorage.setItem("_eaglercraftX.g", "lang:pt_BR\n");
+				} else if (!g.includes("lang:")) {
+					localStorage.setItem("_eaglercraftX.g", g + "\nlang:pt_BR\n");
+				}
+
+				var s = localStorage.getItem("_eaglercraftX.s");
+				if (s && (s.includes("eternalcraft") || s.includes("MessCraftX") || !s.includes("redpixel"))) {
+					localStorage.removeItem("_eaglercraftX.s");
+				}
+			} catch(e) {
+				console.warn("Storage warning:", e);
+			}
+
 			window.addEventListener("load", () => {
 				if(document.location.href.startsWith("file:")) {
-					alert("HTTP please, do not open this file locally, run a local HTTP server and load it via HTTP");
-				}else {
-					
-					// %%%%%%%%% launch options %%%%%%%%%%%%
+					alert("Abra este arquivo através de um servidor HTTP (ex: GitHub Pages ou python server.py)");
+				} else {
 					
 					const relayId = Math.floor(Math.random() * 3);
 					window.eaglercraftXOpts = {
 						demoMode: false,
-                                                allowUpdateSvc: false,
-                                                allowBootMenu: false,
-                                                showBootMenuOnLaunch: false,
+						allowUpdateSvc: false,
+						allowBootMenu: false,
+						showBootMenuOnLaunch: false,
 						container: "game_frame",
 						assetsURI: "assets.epk",
 						localesURI: "lang/",
+						lang: "pt_BR",
 						worldsDB: "worlds",
 						servers: [
-							{ addr: "wss://x.eternalcraft.eu.org/", name: "MessCraftX" },
+							{ addr: "wss://redpixel.cfd/", name: "RedPixel" }
 						],
 						relays: [
 							{ addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId == 0 },
@@ -41,8 +57,6 @@
 							{ addr: "wss://relay.shhnowisnottheti.me/", comment: "ayunami relay #1", primary: relayId == 2 }
 						]
 					};
-					
-					// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					
 					var q = window.location.search;
 					if(typeof q === "string" && q.startsWith("?")) {
@@ -52,11 +66,9 @@
 					}
 					
 					main();
-					
 				}
 			});
 		</script>
 	</head>
 	<body style="margin: 0px; width: 100vw; height: 100vh; overflow: hidden;" id="game_frame" onclick="window.focus()"></body>
-
 </html>
