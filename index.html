@@ -1,60 +1,366 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RedPixel - Minecraft 1.8.8 no Navegador</title>
-<link rel="stylesheet" href="style.css">
-<meta name="description" content="Jogue no servidor RedPixel direto do seu navegador na versão 1.8.8." />
-<meta property="og:title" content="RedPixel - Minecraft 1.8.8" />
-<meta property="og:description" content="Conecte-se ao servidor redpixel.cfd diretamente pelo navegador!" />
-<link rel="icon" type="image/x-icon" href="https://mess.eu.org/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REDPIXEL » A Maior Rede de BedWars</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/logo_square.png">
+    <meta property="og:title" content="REDPIXEL » A Maior Rede de BedWars">
+    <meta property="og:description" content="A melhor e mais competitiva rede de BedWars do Brasil. Venha jogar!">
+    <meta property="og:image" content="img/logo.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="author">
-  <h1>RedPixel</h1>
-</div>
-<div class="scene">
-  <div class="bee">
-    <div class="wing_right wing"></div>
-    <div class="wing_left wing"></div>
-    <div class="antenna_right antenna"></div>
-    <div class="antenna_left antenna"></div>
-    <div class="bee_face front"></div>
-    <div class="bee_face back"></div>
-    <div class="bee_face right"></div>
-    <div class="bee_face left"></div>
-    <div class="bee_face top"></div>
-    <div class="bee_face bottom"></div>
-    <div class="leg_right leg_right_one leg"></div>
-    <div class="leg_right leg_right_two leg"></div>
-    <div class="leg_right leg_right_three leg"></div>
-    <div class="leg_left leg_left_one leg"></div>
-    <div class="leg_left leg_left_two leg"></div>
-    <div class="leg_left leg_left_three leg"></div>
-    <div class="stinger"></div>
-  </div>
-  <div class="cube">
-    <div class="rose">
-      <div class="rose_first rose_part"></div>
-      <div class="rose_second rose_part"></div>
+
+    <!-- NAVBAR (Mush Style: Clean, Fixed & Modular) -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="img/logo.png" alt="REDPIXEL Logo" class="nav-brand-logo">
+                <div class="logo-text">
+                    <span class="logo-red">RED</span><span class="logo-white">PIXEL</span>
+                </div>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> Início</a>
+                <a href="play/1.8.8/" class="nav-item" style="color: #ff4757; font-weight: 700;"><i class="fa-solid fa-gamepad"></i> Jogar Web (1.8.8)</a>
+                <a href="#modos" class="nav-item"><i class="fa-solid fa-cubes"></i> Minigames</a>
+                <a href="loja.html" class="nav-item nav-loja"><i class="fa-solid fa-cart-shopping"></i> Loja VIP</a>
+                <a href="rankings.html" class="nav-item"><i class="fa-solid fa-trophy"></i> Hall da Fama</a>
+                <a href="regras.html" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> Regras</a>
+                <a href="https://discord.gg/redpixel" target="_blank" class="nav-item"><i class="fa-brands fa-discord"></i> Discord</a>
+            </div>
+
+            <div class="nav-action">
+                <a href="play/1.8.8/" class="btn-play-header" id="btnPlayHeader" style="text-decoration: none;">
+                    <span class="pulse-icon"></span>
+                    <span>JOGAR WEB</span>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (Mush Center Hero Banner) -->
+    <header class="hero-section" id="inicio">
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-container">
+            
+            <!-- Large Server Branding (Official 3D Logo) -->
+            <div class="brand-showcase">
+                <div class="hero-logo-wrapper">
+                    <img src="img/logo.png" alt="REDPIXEL Network" class="hero-main-logo">
+                </div>
+                <h1 class="hero-title-sr">REDPIXEL Network</h1>
+                <p class="hero-tagline">Diversão sem limites: salas personalizadas, modificadores malucos, morphs e itens inusitados!</p>
+            </div>
+
+            <!-- Server Status & Live Counter (Real Time from /api/status) -->
+            <div class="server-status-badge">
+                <span class="status-indicator-dot" id="statusDot"></span>
+                <span class="status-count" id="playerCount">...</span>
+                <span class="status-label" id="statusLabel">jogadores se divertindo no servidor</span>
+            </div>
+
+            <!-- Interactive IP Box (One Click to Copy) -->
+            <div class="ip-card" id="ipCard">
+                <div class="ip-content">
+                    <span class="ip-title">ENDEREÇO DE IP DO SERVIDOR:</span>
+                    <span class="ip-value" id="serverIp">redpixel.cfd</span>
+                </div>
+                <button class="ip-btn-action" id="btnCopyIp">
+                    <i class="fa-regular fa-copy" id="copyIcon"></i>
+                    <span id="copyText">CLIQUE PARA COPIAR</span>
+                </button>
+            </div>
+
+            <!-- Botão de Destaque: Jogar Minecraft no Navegador -->
+            <div class="browser-play-container" style="margin-top: 25px; margin-bottom: 25px; text-align: center;">
+                <a href="play/1.8.8/" class="btn-play-browser-large">
+                    <i class="fa-solid fa-gamepad" style="font-size: 1.3rem;"></i>
+                    <span>JOGAR REDPIXEL NO NAVEGADOR (1.8.8)</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <div style="margin-top: 10px; color: #a4b0be; font-size: 0.88rem;">
+                    <i class="fa-solid fa-bolt" style="color: #ff4757;"></i> Sem downloads • Entre e jogue direto pelo Chrome, Edge, Celular ou Chromebook
+                </div>
+            </div>
+
+            <!-- Quick Specs -->
+            <div class="server-specs">
+                <div class="spec-item"><i class="fa-solid fa-cube"></i> Versões: <strong>1.8.x até 1.21.x</strong></div>
+                <div class="spec-divider">•</div>
+                <div class="spec-item"><i class="fa-solid fa-bolt"></i> <strong>20.0 TPS</strong> Sem Lag</div>
+                <div class="spec-divider">•</div>
+                <div class="spec-item"><i class="fa-solid fa-wand-magic-sparkles"></i> <strong>Modificadores & Morphs</strong></div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- 4 MAIN PORTAL CARDS (Modular Quick Navigation) -->
+    <section class="portal-cards-section">
+        <div class="main-container">
+            <div class="portal-grid">
+                
+                <!-- Card 1: Loja VIP -->
+                <div class="portal-card card-store">
+                    <div class="portal-icon-wrapper">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="portal-body">
+                        <h3>LOJA OFICIAL</h3>
+                        <p>Adquira VIPs (VIP, Booster, Beta e Red) com PIX instantâneo e entrega automatizada no jogo.</p>
+                    </div>
+                    <a href="loja.html" class="portal-btn">
+                        <span>Acessar Loja</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Card 2: Discord -->
+                <div class="portal-card card-discord">
+                    <div class="portal-icon-wrapper">
+                        <i class="fa-brands fa-discord"></i>
+                    </div>
+                    <div class="portal-body">
+                        <h3>NOSSO DISCORD</h3>
+                        <p>Vincule sua conta via <code>/vincular</code>, participe de eventos, envie comprovantes de PIX e fale com a Staff.</p>
+                    </div>
+                    <a href="https://discord.gg/redpixel" target="_blank" class="portal-btn">
+                        <span>Entrar no Discord</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Card 3: Rankings Reais -->
+                <div class="portal-card card-modes">
+                    <div class="portal-icon-wrapper">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="portal-body">
+                        <h3>HALL DA FAMA</h3>
+                        <p>Veja os destaques do servidor! Estatísticas de Vitórias, Final Kills e Camas sincronizadas ao vivo.</p>
+                    </div>
+                    <a href="rankings.html" class="portal-btn">
+                        <span>Ver Rankings</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Card 4: Regras -->
+                <div class="portal-card card-rules">
+                    <div class="portal-icon-wrapper">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="portal-body">
+                        <h3>REGRAS DA REDE</h3>
+                        <p>Conheça as diretrizes de convivência da nossa comunidade. Foco total em diversão e respeito mútuo.</p>
+                    </div>
+                    <a href="regras.html" class="portal-btn">
+                        <span>Ler Regras</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- REAL GAME MODES SECTION -->
+    <section class="section-modes" id="modos">
+        <div class="main-container">
+            <div class="section-headline">
+                <span class="sub-headline">MINIGAMES & MODOS ESPECIAIS</span>
+                <h2 class="main-headline">Foco em Diversão & Vários Modos</h2>
+                <p class="headline-desc">Nosso servidor tem como objetivo principal a diversão dos jogadores, sem pressão competitiva ou tryhard excessivo. Jogue com seus amigos, personalize salas com modificadores insanos, use morphs de mobs e experimente dezenas de itens inusitados!</p>
+            </div>
+
+            <div class="modes-container">
+                <!-- Modo 1: Bedwars -->
+                <div class="mode-item featured">
+                    <div class="featured-ribbon">DESTAQUE</div>
+                    <div class="mode-header">
+                        <div class="mode-tag bedwars">BEDWARS</div>
+                        <span class="mode-arenas"><i class="fa-solid fa-circle-check"></i> Disponível Agora</span>
+                    </div>
+                    <div class="mode-visual">
+                        <i class="fa-solid fa-bed"></i>
+                    </div>
+                    <h3>Bedwars & Modos Malucos</h3>
+                    <p>Proteja sua cama e divirta-se nos formatos tradicionais ou nos modos especiais pré-configurados cheios de caos e novidades:</p>
+                    <ul class="mode-perks">
+                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> <strong>Modos Especiais</strong> - Caos Total, OP Rush, Gravidade Zero, Vampirismo e Chuva de Bigornas</li>
+                        <li><i class="fa-solid fa-paw"></i> <strong>Morphs Exclusivos</strong> - Transforme-se em Blaze, Golem, Creeper ou Enderman com modelo real</li>
+                        <li><i class="fa-solid fa-boxes-stacked"></i> <strong>Kits Casuais</strong> - Kits divertidos (Lã, Obsidiana, Padeiro, Pescador) com upgrades de moedas</li>
+                        <li><i class="fa-solid fa-shield-halved"></i> <strong>Itens Inusitados</strong> - Relógio de Retorno, Orbe de Permutação, Gancho Tático e Trampolins</li>
+                        <li><i class="fa-solid fa-users"></i> <strong>Salas Customizadas</strong> - Crie partidas com seus amigos com o editor de modificadores</li>
+                    </ul>
+                </div>
+
+                <!-- Modo 2: Skywars -->
+                <div class="mode-item featured">
+                    <div class="featured-ribbon" style="background: #0984e3;">NOVIDADE</div>
+                    <div class="mode-header">
+                        <div class="mode-tag" style="background: rgba(9, 132, 227, 0.2); color: #0984e3; border: 1px solid rgba(9, 132, 227, 0.4);">SKYWARS</div>
+                        <span class="mode-arenas"><i class="fa-solid fa-circle-check"></i> Disponível Agora</span>
+                    </div>
+                    <div class="mode-visual" style="color: #0984e3;">
+                        <i class="fa-solid fa-feather"></i>
+                    </div>
+                    <h3>SkyWars & Batalha Insana</h3>
+                    <p>Batalhe em ilhas flutuantes épicas no mapa Aquarius! Colete itens nos baús, domine o centro e seja o último sobrevivente:</p>
+                    <ul class="mode-perks">
+                        <li><i class="fa-solid fa-shield-halved"></i> <strong>8 Kits Exclusivos</strong> - Cavaleiro, Arqueiro, Mago, Armeiro, Rusher, Pyro, Canhoneiro e Ecologista</li>
+                        <li><i class="fa-solid fa-angles-up"></i> <strong>3 Tiers de Evolução</strong> - Aprimore seus kits favoritos com moedas exclusivas de SkyWars</li>
+                        <li><i class="fa-solid fa-users"></i> <strong>Modos Solo & Duplas</strong> - Jogue sozinho ou em equipe com seus amigos</li>
+                        <li><i class="fa-solid fa-bolt"></i> <strong>Eventos Dinâmicos</strong> - Refil de baús, aparição do dragão e combate vertiginoso</li>
+                        <li><i class="fa-solid fa-coins"></i> <strong>Economia Dedicada</strong> - Coins de SkyWars e Cash da rede integrados</li>
+                    </ul>
+                </div>
+
+                <!-- Modo 3: Duels -->
+                <div class="mode-item">
+                    <div class="featured-ribbon" style="background: #e67e22;">NOVIDADE</div>
+                    <div class="mode-header">
+                        <div class="mode-tag duels">DUELS</div>
+                        <span class="mode-arenas" style="color: #f39c12;"><i class="fa-solid fa-clock"></i> Em Breve</span>
+                    </div>
+                    <div class="mode-visual" style="color: #f39c12;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3>Duels</h3>
+                    <p>Arenas de combate rápido 1v1 para você treinar suas mecânicas, mira, combos e knockback competitivo em diversos estilos de PvP:</p>
+                    <ul class="mode-perks">
+                        <li><i class="fa-solid fa-hourglass-half" style="color: #f39c12;"></i> <strong>Em breve</strong> - Sistema completo de duelos em preparação</li>
+                        <li><i class="fa-solid fa-check"></i> Knockback 1.8.8 clássico e perfeitamente calibrado</li>
+                        <li><i class="fa-solid fa-check"></i> Modos Classic, UHC, NoDebuff, Sumo e BedFight</li>
+                        <li><i class="fa-solid fa-check"></i> Filas rápidas, ranking competitivo e estatísticas detalhadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY & DISCORD BANNER -->
+    <section class="section-community" id="comunidade">
+        <div class="main-container">
+            <div class="community-banner">
+                <div class="comm-left">
+                    <span class="comm-pill"><i class="fa-brands fa-discord"></i> COMUNIDADE OFICIAL</span>
+                    <h2>Faça Parte da Nossa Comunidade</h2>
+                    <p>Conecte-se com outros jogadores, acompanhe novidades e atualizações em primeira mão e conte com suporte da equipe.</p>
+                    <div class="comm-buttons">
+                        <a href="https://discord.gg/redpixel" target="_blank" class="btn-discord-join">
+                            <i class="fa-brands fa-discord"></i> ENTRAR NO DISCORD
+                        </a>
+                        <div class="comm-vincular-tip">
+                            <i class="fa-solid fa-link"></i>
+                            <span>Digite <strong>/vincular</strong> no servidor para sincronizar seus cargos!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comm-right">
+                    <div class="discord-card-preview">
+                        <div class="d-header">
+                            <div class="d-icon"><i class="fa-brands fa-discord"></i></div>
+                            <div>
+                                <div class="d-title">REDPIXEL NETWORK</div>
+                                <div class="d-members"><span class="d-dot"></span> Servidor Conectado</div>
+                            </div>
+                        </div>
+                        <div class="d-body">
+                            <div class="d-chat-bubble">
+                                <span class="d-user">[ADMIN] Staff</span>
+                                <p>Servidor online e atualizado! Digite <strong>redpixel.cfd</strong> no seu cliente e venha jogar!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW TO PLAY GUIDE -->
+    <section class="section-guide" id="como-jogar">
+        <div class="main-container">
+            <div class="section-headline">
+                <span class="sub-headline">PASSO A PASSO</span>
+                <h2 class="main-headline">Como Entrar no Servidor</h2>
+                <p class="headline-desc">É muito simples começar a jogar no REDPIXEL. Siga o guia abaixo:</p>
+            </div>
+
+            <div class="guide-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Inicie seu Minecraft</h4>
+                    <p>Abra seu inicializador de Minecraft na versão <strong>1.8.8</strong> (recomendada para PvP) até a versão <strong>1.21</strong>.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Acesse o Multijogador</h4>
+                    <p>No menu principal do jogo, clique em <strong>Multijogador</strong> e depois em <strong>Adicionar Servidor</strong> ou <strong>Conexão Direta</strong>.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Insira o Endereço IP</h4>
+                    <p>No campo de endereço, informe: <code class="ip-code">redpixel.cfd</code> e clique em <strong>Concluir</strong> para se conectar!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Mush Signature Style) -->
+    <footer class="footer">
+        <div class="main-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-brand-link">
+                        <img src="img/logo.png" alt="REDPIXEL Logo" class="footer-logo-img">
+                    </a>
+                    <p class="footer-slogan">A melhor experiência em minigames e BedWars competitivo.</p>
+                </div>
+
+                <div class="footer-social-links">
+                    <a href="https://discord.gg/redpixel" target="_blank" class="social-icon discord" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="loja.html" class="social-icon store" title="Loja VIP"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="rankings.html" class="social-icon rank" title="Hall da Fama"><i class="fa-solid fa-trophy"></i></a>
+                    <a href="regras.html" class="social-icon rules" title="Regras"><i class="fa-solid fa-scale-balanced"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copy">
+                    &copy; 2026 <strong>REDPIXEL Network</strong>. Todos os direitos reservados.
+                </div>
+                <div class="footer-disclaimer">
+                    Não possuímos nenhum vínculo ou afiliação oficial com a Mojang Studios ou Microsoft Corporation.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastNotification" class="toast-box">
+        <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
+        <div class="toast-msg">
+            <strong>IP Copiado com Sucesso!</strong>
+            <span>redpixel.cfd foi enviado para a área de transferência.</span>
+        </div>
     </div>
-    <div class="cube_face front"></div>
-    <div class="cube_face back"></div>
-    <div class="cube_face right"></div>
-    <div class="cube_face left"></div>
-    <div class="cube_face top"></div>
-    <div class="cube_face bottom"></div>
-    <div class="ground"></div>
-    <div class="grass">
-      <div class="grass_first grass_part"></div>
-      <div class="grass_second grass_part"></div>
-    </div>
-  </div>
-</div>
-<div id="author">
-  <a type="button" class="button" href="./play/1.8.8/">Jogar no RedPixel (1.8.8)</a>
-</div>
-<script src="script.js"></script>
+
+    <script src="app.js"></script>
 </body>
 </html>
